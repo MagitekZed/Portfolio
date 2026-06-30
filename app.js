@@ -162,7 +162,7 @@
   var THEMES = [
     { key: "midnight",  label: "Midnight",   dots: ["#181a23", "#818cf8", "#a78bfa"] },
     { key: "vaporwave", label: "Vapor Wave", dots: ["#241342", "#ff5fbf", "#34e0e0"] },
-    { key: "forest",    label: "Forest",     dots: ["#14201a", "#34d399", "#a3e635"] },
+    { key: "matrix",    label: "Matrix",     dots: ["#05160c", "#00ff66", "#7cfc00"] },
     { key: "sunset",    label: "Sunset",     dots: ["#26171a", "#fb923c", "#f472b6"] },
     { key: "daylight",  label: "Daylight",   dots: ["#ffffff", "#6366f1", "#8b5cf6"] },
   ];

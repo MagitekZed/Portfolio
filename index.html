@@ -9,7 +9,7 @@
   <script>
     /* Apply saved theme before first paint to avoid a flash. Default: Midnight (dark). */
     (function () {
-      var ok = { midnight: 1, vaporwave: 1, forest: 1, sunset: 1, daylight: 1 };
+      var ok = { midnight: 1, vaporwave: 1, matrix: 1, sunset: 1, daylight: 1 };
       var t;
       try { t = localStorage.getItem("portfolio.theme"); } catch (e) {}
       document.documentElement.setAttribute("data-theme", ok[t] ? t : "midnight");
@@ -36,6 +36,7 @@
       --accent-2: #a78bfa;
       --accent-hover: #9aa3fb;
       --accent-soft: #232544;
+      --on-accent: #ffffff;
       --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
       --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
       --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
@@ -62,25 +63,26 @@
       --shadow-lg: 0 16px 44px rgba(255, 95, 191, 0.32);
     }
 
-    /* Forest (dark, emerald + lime) */
-    [data-theme="forest"] {
-      --bg: #0c1410;
-      --bg-grad-1: #102a1c;
-      --bg-grad-2: #0a201d;
-      --surface: #14201a;
-      --surface-2: #1b2b22;
-      --text: #e7f3ea;
-      --text-muted: #9db8a6;
-      --text-faint: #6a8676;
-      --border: #25372c;
-      --border-strong: #324a3b;
-      --accent: #34d399;
-      --accent-2: #a3e635;
-      --accent-hover: #4ade9f;
-      --accent-soft: #16291f;
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
-      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+    /* Matrix (near-black, phosphor green) */
+    [data-theme="matrix"] {
+      --bg: #010a04;
+      --bg-grad-1: #042b13;
+      --bg-grad-2: #021c0d;
+      --surface: #05160c;
+      --surface-2: #0a2414;
+      --text: #d4ffdf;
+      --text-muted: #5fcf83;
+      --text-faint: #3a8455;
+      --border: #123a22;
+      --border-strong: #1d5733;
+      --accent: #00ff66;
+      --accent-2: #7cfc00;
+      --accent-hover: #4dff8d;
+      --accent-soft: #0c2c1a;
+      --on-accent: #022b12;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 16px 40px rgba(0, 255, 102, 0.18);
     }
 
     /* Sunset (dark, warm orange + rose) */
@@ -369,7 +371,7 @@
     .btn svg { width: 15px; height: 15px; flex: none; }
     .btn:active { transform: translateY(1px); }
     .btn-primary {
-      background: var(--accent); color: #fff; border: 1px solid var(--accent);
+      background: var(--accent); color: var(--on-accent); border: 1px solid var(--accent);
       flex: 1 1 auto; justify-content: center;
     }
     .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
