@@ -43,10 +43,19 @@ The owner, page title, and subtitle live at the top of `projects.js` under
 
 ## Features
 
-- Responsive card grid, light/dark theme (follows your system, with a manual toggle).
+- Responsive card grid with **5 color themes** — Midnight (default), Vapor Wave,
+  Forest, Sunset, and Daylight — picked from the palette button in the header.
+  Defaults to Midnight (dark); your choice persists across visits.
 - Sort by **Last updated** (default, newest first) or **Title**; click the active
   sort again, or the arrow, to flip direction. Choices persist across visits.
 - Live search box that filters by title, description, repo name, and tags.
+
+### Adding a theme
+
+1. Add a palette block in `index.html` under `[data-theme="<key>"]` (copy an
+   existing one and change the colors).
+2. Add a matching entry to the `THEMES` array near the top of `app.js`
+   (`key`, `label`, and three preview swatch colors).
 
 ## Files
 

@@ -28,6 +28,7 @@
     github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2 0 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.3-.5-1.5.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>',
     lock: '<svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
     calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+    check: '<svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>',
   };
 
   /* ---- helpers ---- */
@@ -155,20 +156,64 @@
     render();
   }
 
-  /* ---- theme ---- */
-  function applyTheme(t) {
-    if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
-    else document.documentElement.removeAttribute("data-theme"); // follow system
+  /* ---- themes ----
+   * To add a theme: add a palette block in index.html under [data-theme="<key>"]
+   * and add a matching entry here (key, label, and 3 preview swatch colors). */
+  var THEMES = [
+    { key: "midnight",  label: "Midnight",   dots: ["#181a23", "#818cf8", "#a78bfa"] },
+    { key: "vaporwave", label: "Vapor Wave", dots: ["#241342", "#ff5fbf", "#34e0e0"] },
+    { key: "forest",    label: "Forest",     dots: ["#14201a", "#34d399", "#a3e635"] },
+    { key: "sunset",    label: "Sunset",     dots: ["#26171a", "#fb923c", "#f472b6"] },
+    { key: "daylight",  label: "Daylight",   dots: ["#ffffff", "#6366f1", "#8b5cf6"] },
+  ];
+  var DEFAULT_THEME = "midnight";
+
+  function validTheme(k) { for (var i = 0; i < THEMES.length; i++) if (THEMES[i].key === k) return true; return false; }
+  function savedTheme() { var t = load(LS.theme, ""); return validTheme(t) ? t : DEFAULT_THEME; }
+  function applyTheme(k) { document.documentElement.setAttribute("data-theme", validTheme(k) ? k : DEFAULT_THEME); }
+  function setTheme(k) { applyTheme(k); save(LS.theme, k); markActiveTheme(k); }
+
+  function markActiveTheme(k) {
+    Array.prototype.forEach.call(document.querySelectorAll(".theme-opt"), function (b) {
+      var on = b.getAttribute("data-theme-key") === k;
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-checked", on ? "true" : "false");
+    });
   }
-  function currentTheme() {
-    var saved = load(LS.theme, "");
-    if (saved === "dark" || saved === "light") return saved;
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+  function buildThemeMenu() {
+    var pop = document.getElementById("theme-pop");
+    if (!pop) return;
+    pop.innerHTML = '<div class="head">Theme</div>' + THEMES.map(function (t) {
+      var sw = t.dots.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join("");
+      return '<button type="button" class="theme-opt" role="menuitemradio" aria-checked="false" data-theme-key="' + t.key + '">' +
+        '<span class="swatch">' + sw + "</span>" +
+        '<span class="label">' + esc(t.label) + "</span>" +
+        ICON.check + "</button>";
+    }).join("");
+    Array.prototype.forEach.call(pop.querySelectorAll(".theme-opt"), function (b) {
+      b.addEventListener("click", function () { setTheme(b.getAttribute("data-theme-key")); closeThemeMenu(); });
+    });
   }
-  function toggleTheme() {
-    var next = currentTheme() === "dark" ? "light" : "dark";
-    save(LS.theme, next);
-    applyTheme(next);
+
+  function onDocClick(e) { if (!e.target.closest(".theme-menu")) closeThemeMenu(); }
+  function onKey(e) { if (e.key === "Escape") closeThemeMenu(); }
+  function openThemeMenu() {
+    var pop = document.getElementById("theme-pop");
+    pop.hidden = false;
+    document.getElementById("theme-btn").setAttribute("aria-expanded", "true");
+    setTimeout(function () { document.addEventListener("click", onDocClick); document.addEventListener("keydown", onKey); }, 0);
+  }
+  function closeThemeMenu() {
+    var pop = document.getElementById("theme-pop");
+    pop.hidden = true;
+    document.getElementById("theme-btn").setAttribute("aria-expanded", "false");
+    document.removeEventListener("click", onDocClick);
+    document.removeEventListener("keydown", onKey);
+  }
+  function toggleThemeMenu() {
+    var pop = document.getElementById("theme-pop");
+    if (pop.hidden) openThemeMenu(); else closeThemeMenu();
   }
 
   /* ---- init ---- */
@@ -181,22 +226,20 @@
     var repoLink = document.getElementById("repo-link");
     if (repoLink) repoLink.href = "https://github.com/" + OWNER + "/Portfolio";
 
-    applyTheme(load(LS.theme, "") || (function () { return null; })());
+    buildThemeMenu();
+    applyTheme(savedTheme());
+    markActiveTheme(savedTheme());
+    document.getElementById("theme-btn").addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleThemeMenu();
+    });
 
-    document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
     document.getElementById("dir-btn").addEventListener("click", flipDir);
     Array.prototype.forEach.call(document.querySelectorAll(".segmented button"), function (b) {
       b.addEventListener("click", function () { setSort(b.getAttribute("data-sort")); });
     });
     var search = document.getElementById("search");
     search.addEventListener("input", function () { state.query = search.value.trim(); render(); });
-
-    // react to system theme changes when user hasn't chosen explicitly
-    if (window.matchMedia) {
-      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
-        if (!load(LS.theme, "")) applyTheme(null);
-      });
-    }
 
     render();
   }
