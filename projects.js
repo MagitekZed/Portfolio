@@ -26,6 +26,15 @@ window.PORTFOLIO = {
 
   projects: [
     {
+      title: "PDF Splitter",
+      repo: "PDF-Splitter",
+      site: "https://magitekzed.github.io/PDF-Splitter/",
+      description: "Fully in-browser, private PDF splitter that slices big PDFs — like RPG sourcebooks — into token-sized chunks ready to feed an AI.",
+      updated: "2026-06-30",
+      tags: ["pdf", "tabletop", "ai"],
+      private: false,
+    },
+    {
       title: "YouTube Roulette",
       repo: "ytroulette",
       site: "https://magitekzed.github.io/ytroulette/",
@@ -66,7 +75,7 @@ window.PORTFOLIO = {
       repo: "Anime-Tracker",
       site: "https://magitekzed.github.io/Anime-Tracker/",
       description: "Personal anime watch-log and watchlist with ratings, status filters, and a taste profile, all in a single dark-themed page.",
-      updated: "2026-06-14",
+      updated: "2026-06-30",
       tags: ["anime", "tracker", "watchlist"],
       private: true,
     },
