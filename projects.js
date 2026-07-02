@@ -26,6 +26,15 @@ window.PORTFOLIO = {
 
   projects: [
     {
+      title: "Encyclopedia Magica",
+      repo: "Encyclopedia-Magica",
+      site: "https://magitekzed.github.io/Encyclopedia-Magica/",
+      description: "Random magic-item & artifact roller for AD&D 2e's Encyclopedia Magica — 5,709 entries across every table, with an explain-the-roll trace tree.",
+      updated: "2026-07-02",
+      tags: ["ad&d 2e", "tabletop", "dice roller"],
+      private: false,
+    },
+    {
       title: "PDF Splitter",
       repo: "PDF-Splitter",
       site: "https://magitekzed.github.io/PDF-Splitter/",
