@@ -26,6 +26,24 @@ window.PORTFOLIO = {
 
   projects: [
     {
+      title: "Steam Backlog Roulette",
+      repo: "steam-roulette",
+      site: "https://magitekzed.github.io/steam-roulette/",
+      description: "Spins a random pick from your Steam backlog — filter by playtime, age, tags, and review score, then track “trying it / uninstalled” verdicts.",
+      updated: "2026-07-12",
+      tags: ["steam", "gaming", "backlog"],
+      private: true,
+    },
+    {
+      title: "Algorithm Resetter",
+      repo: "algorithm-resetter",
+      site: "https://magitekzed.github.io/algorithm-resetter/",
+      description: "Seeds your YouTube watch history with curated-random videos from topics you choose, nudging your recommendations out of their rut.",
+      updated: "2026-07-05",
+      tags: ["youtube", "algorithm", "web tool"],
+      private: false,
+    },
+    {
       title: "Encyclopedia Magica",
       repo: "Encyclopedia-Magica",
       site: "https://magitekzed.github.io/Encyclopedia-Magica/",
@@ -84,7 +102,7 @@ window.PORTFOLIO = {
       repo: "Anime-Tracker",
       site: "https://magitekzed.github.io/Anime-Tracker/",
       description: "Personal anime watch-log and watchlist with ratings, status filters, and a taste profile, all in a single dark-themed page.",
-      updated: "2026-07-02",
+      updated: "2026-07-07",
       tags: ["anime", "tracker", "watchlist"],
       private: true,
     },
@@ -120,7 +138,7 @@ window.PORTFOLIO = {
       repo: "chain-games",
       site: "https://magitekzed.github.io/chain-games/",
       description: "Disc golf scoring app with alternative game modes for tracking rounds and playing friendly variant games.",
-      updated: "2026-07-03",
+      updated: "2026-07-08",
       tags: ["disc golf", "scorekeeper", "sports"],
       private: true,
     },
